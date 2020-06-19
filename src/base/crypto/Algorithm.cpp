@@ -129,6 +129,9 @@ static AlgoName const algorithm_names[] = {
     { "RandomSFX",                 nullptr,            Algorithm::RX_SFX          },
     { "randomx/keva",              "rx/keva",          Algorithm::RX_KEVA         },
     { "RandomKEVA",                nullptr,            Algorithm::RX_KEVA         },
+    { "randomx/yada",              "rx/yada",          Algorithm::RX_YADA         },
+    { "RandomYADA",                nullptr,            Algorithm::RX_YADA         },
+
 #   endif
 #   ifdef XMRIG_ALGO_ARGON2
     { "argon2/chukwa",             nullptr,            Algorithm::AR2_CHUKWA      },
@@ -335,6 +338,7 @@ xmrig::Algorithm::Family xmrig::Algorithm::family(Id id)
     case RX_ARQ:
     case RX_SFX:
     case RX_KEVA:
+    case RX_YADA:
         return RANDOM_X;
 #   endif
 

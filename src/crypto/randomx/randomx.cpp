@@ -108,6 +108,13 @@ RandomX_ConfigurationKeva::RandomX_ConfigurationKeva()
 	ScratchpadL3_Size = 1048576;
 }
 
+RandomX_ConfigurationYada::RandomX_ConfigurationYada()
+{
+    ArgonSalt = "RandomXYadaCoin\x03";
+    SuperscalarLatency = 150;
+    ArgonIterations = 4;
+}
+
 RandomX_ConfigurationBase::RandomX_ConfigurationBase()
 	: ArgonMemory(262144)
 	, ArgonIterations(3)
