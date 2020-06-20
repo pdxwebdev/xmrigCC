@@ -175,6 +175,7 @@ size_t xmrig::Algorithm::l2() const
 
     case RX_WOW:
     case RX_KEVA:
+    case RX_YADA:
         return 0x20000;
 
     case RX_ARQ:
@@ -212,6 +213,7 @@ size_t xmrig::Algorithm::l3() const
 
         case RX_WOW:
         case RX_KEVA:
+        case RX_YADA:
             return oneMiB;
 
         case RX_ARQ:

@@ -53,7 +53,8 @@ static CoinName const coin_names[] = {
     { "arq",        Coin::ARQMA  },
     { "dero",       Coin::DERO   },
     { "keva",       Coin::KEVA   },
-    { "pengo",      Coin::PENGO  }
+    { "pengo",      Coin::PENGO  },
+    { "yada",       Coin::YADA   }
 };
 
 
@@ -78,6 +79,9 @@ xmrig::Algorithm::Id xmrig::Coin::algorithm(uint8_t blobVersion) const
 
     case PENGO:
         return (blobVersion >= 6) ? Algorithm::AR2_CHUKWA_LITE : Algorithm::CN_PICO_0;
+
+    case YADA:
+        return (blobVersion >= 12) ? Algorithm::RX_YADA : Algorithm::CN_R;
 
     case INVALID:
         break;

@@ -80,6 +80,7 @@ private:
         API_CRYPTONOTE_DEFAULT,
         API_MONERO,
         API_DERO,
+        API_YADA,
     } m_apiVersion;
 
     std::shared_ptr<IHttpListener> m_httpListener;
