@@ -286,8 +286,8 @@ bool xmrig::DaemonClient::parseJob(const rapidjson::Value &params, int *code)
     m_blocktemplate = std::move(blocktemplate);
 
     if (m_apiVersion == API_YADA) {
-      if (m_blockhashingblob.size() > 64) {
-        m_prevHash = String(m_blockhashingblob.data() + m_blockhashingblob.size() - 64, 64);
+      if (m_blockhashingblob.size() >= 148) {
+        m_prevHash = String(m_blockhashingblob.data() + 83, 64);
       }
     }
     else{
