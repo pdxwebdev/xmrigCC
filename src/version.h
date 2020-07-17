@@ -25,17 +25,17 @@
 #ifndef XMRIG_VERSION_H
 #define XMRIG_VERSION_H
 
-#define APP_ID        "XMRigCC"
-#define APP_NAME      "XMRigCC"
-#define APP_DESC      "XMRigCC CPU miner"
-#define APP_VERSION   "2.7.0 "
+#define APP_ID        "YadaCoin-XMRigCC"
+#define APP_NAME      "YadaCoin-XMRigCC"
+#define APP_DESC      "YadaCoin-XMRigCC CPU miner"
+#define APP_VERSION   "2.8.0 RC2"
 #define APP_DOMAIN    ""
 #define APP_SITE      "https://github.com/BenDr0id/xmrigCC/"
 #define APP_COPYRIGHT "Copyright (C) 2017- XMRigCC"
 #define APP_KIND      "cpu"
 
 #define APP_VER_MAJOR  2
-#define APP_VER_MINOR  7
+#define APP_VER_MINOR  8
 #define APP_VER_PATCH  0
 
 #ifndef NDEBUG
