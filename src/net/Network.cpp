@@ -217,10 +217,20 @@ void xmrig::Network::onPause(IStrategy *strategy)
 void xmrig::Network::onResultAccepted(IStrategy *, IClient *, const SubmitResult &result, const char *error)
 {
     if (error) {
+        if (m_state->algorithm() == Algorithm::RX_YADA) {
+            LOG_INFO("%s " GREEN_BOLD("accepted") " (%" PRId64 "/%" PRId64 ")" BLACK_BOLD("(%" PRIu64 " ms)"),
+                    backend_tag(result.backend), m_state->accepted(), m_state->rejected(), result.elapsed);
+            return;
+        }
         LOG_INFO("%s " RED_BOLD("rejected") " (%" PRId64 "/%" PRId64 ") diff " WHITE_BOLD("%" PRIu64) " " RED("\"%s\"") " " BLACK_BOLD("(%" PRIu64 " ms)"),
                  backend_tag(result.backend), m_state->accepted(), m_state->rejected(), result.diff, error, result.elapsed);
     }
     else {
+        if (m_state->algorithm() == Algorithm::RX_YADA) {
+            LOG_INFO("%s " GREEN_BOLD("accepted") " (%" PRId64 "/%" PRId64 ")" BLACK_BOLD("(%" PRIu64 " ms)"),
+                    backend_tag(result.backend), m_state->accepted(), m_state->rejected(), result.diff, result.elapsed);
+            return;
+        }
         LOG_INFO("%s " GREEN_BOLD("accepted") " (%" PRId64 "/%" PRId64 ") diff " WHITE_BOLD("%" PRIu64) " " BLACK_BOLD("(%" PRIu64 " ms)"),
                  backend_tag(result.backend), m_state->accepted(), m_state->rejected(), result.diff, result.elapsed);
     }
@@ -264,12 +274,22 @@ void xmrig::Network::onUpdateRequest(ClientStatus& clientStatus)
 void xmrig::Network::setJob(IClient *client, const Job &job, bool donate)
 {
     if (job.height()) {
-        LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d") " diff " WHITE_BOLD("%" PRIu64) " algo " WHITE_BOLD("%s") " height " WHITE_BOLD("%" PRIu64),
-                 tag, client->pool().host().data(), client->pool().port(), job.diff(), job.algorithm().shortName(), job.height());
+        if (job.algorithm() == Algorithm::RX_YADA) {
+            LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d") " target " WHITE_BOLD("%016" PRIx64) " algo " WHITE_BOLD("%s") " height " WHITE_BOLD("%" PRIu64),
+                    tag, client->pool().host().data(), client->pool().port(), job.target(), job.algorithm().shortName(), job.height());
+        } else {
+            LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d") " diff " WHITE_BOLD("%" PRIu64) " algo " WHITE_BOLD("%s") " height " WHITE_BOLD("%" PRIu64),
+                    tag, client->pool().host().data(), client->pool().port(), job.diff(), job.algorithm().shortName(), job.height());
+        }
     }
     else {
-        LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d") " diff " WHITE_BOLD("%" PRIu64) " algo " WHITE_BOLD("%s"),
-                 tag, client->pool().host().data(), client->pool().port(), job.diff(), job.algorithm().shortName());
+        if (job.algorithm() == Algorithm::RX_YADA) {
+            LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d") " target " WHITE_BOLD("%016" PRIx64) " algo " WHITE_BOLD("%s"),
+                    tag, client->pool().host().data(), client->pool().port(), job.target(), job.algorithm().shortName());
+        } else {
+            LOG_INFO("%s " MAGENTA_BOLD("new job") " from " WHITE_BOLD("%s:%d") " diff " WHITE_BOLD("%" PRIu64) " algo " WHITE_BOLD("%s"),
+                    tag, client->pool().host().data(), client->pool().port(), job.diff(), job.algorithm().shortName());
+        }
     }
 
     if (!donate && m_donate) {

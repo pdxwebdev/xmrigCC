@@ -45,6 +45,7 @@ public:
     inline uint64_t sequence() const        { return m_sequence; }
     inline uint8_t *blob()                  { return m_blobs[index()]; }
     inline uint8_t index() const            { return m_index; }
+    inline const String &id() const         { return m_id; }
 
 
     inline void add(const Job &job, uint32_t reserveCount, Nonce::Backend backend)
@@ -94,6 +95,7 @@ private:
         const size_t size = job.size();
         m_jobs[index()]   = job;
         m_rounds[index()] = 0;
+        m_id              = job.id();
 
         m_jobs[index()].setBackend(backend);
 
@@ -109,6 +111,7 @@ private:
     uint32_t m_rounds[2] = { 0, 0 };
     uint64_t m_sequence  = 0;
     uint8_t m_index      = 0;
+    String m_id = "";
 };
 
 

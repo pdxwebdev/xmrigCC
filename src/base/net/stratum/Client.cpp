@@ -187,7 +187,7 @@ int64_t xmrig::Client::submit(const JobResult &result)
     }
 #   endif
 
-    if (result.diff == 0) {
+    if (result.diff == 0 && result.algorithm != Algorithm::RX_YADA) {
         close();
 
         return -1;
@@ -215,7 +215,14 @@ int64_t xmrig::Client::submit(const JobResult &result)
     Value params(kObjectType);
     params.AddMember("id",     StringRef(m_rpcId.data()), allocator);
     params.AddMember("job_id", StringRef(result.jobId.data()), allocator);
-    params.AddMember("nonce",  StringRef(nonce), allocator);
+
+    if (result.algorithm == Algorithm::RX_YADA) {
+        std::string s = std::to_string(result.nonce - 1);
+        std::string newnonce = std::string(8 - s.length(), '0') + s;
+        params.AddMember("nonce", StringRef(newnonce.c_str()), allocator);
+    } else {
+        params.AddMember("nonce",  StringRef(nonce), allocator);
+    }
     params.AddMember("result", StringRef(data), allocator);
 
     if (has<EXT_ALGO>() && result.algorithm.isValid()) {
