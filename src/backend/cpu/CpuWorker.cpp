@@ -272,6 +272,7 @@ void xmrig::CpuWorker<N>::start()
                     randomx_calculate_hash_next(m_vm, tempHash, newdata.c_str(), newdata.length(), m_hash);
                     uint64_t nm_target = strtoull(Buffer::toHex(reinterpret_cast<uint8_t *>(m_hash), 8).data(), nullptr, 16);
                     if (nm_target < (job.target() + 0x000F000000000000)) {
+                        LOG_INFO("%s", Buffer::toHex(reinterpret_cast<uint8_t *>(m_hash), 8).data());
                         JobResults::submit(job, current_job_nonces[i], m_hash);
                     }
                 }
