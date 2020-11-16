@@ -235,6 +235,7 @@ void xmrig::CpuWorker<N>::start()
         }
 #       endif
 
+        size_t startnonce = rand() % 99999999;
         while (!Nonce::isOutdated(Nonce::CPU, m_job.sequence())) {
             if ((m_count & storeStatsMask) == 0) {
                 storeStats();
@@ -248,7 +249,7 @@ void xmrig::CpuWorker<N>::start()
 
             uint32_t current_job_nonces[N];
             for (size_t i = 0; i < N; ++i) {
-                current_job_nonces[i] = *m_job.nonce(i);
+                current_job_nonces[i] = *m_job.nonce(i) + startnonce;
             }
 
             bool valid = true;
